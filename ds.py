@@ -44,7 +44,19 @@ class Party:
     def send(self, party, msg, PKI, round_num):
         should_send = True
         if not self.is_honest:
-            #TODO: implement a dishonest send protocol. 
+            #TODO: implement a dishonest send protocol.
+            # if the random value generated is greater than 0.5
+            if random.random() >= 0.5:
+                # set message value a 0
+                msg.val = 0
+            # else if the party number is even
+            elif party.num % 2 == 0:
+                # set message value a 1
+                msg.val = 1
+            # otherwise
+            else:
+                # return out of the function
+                return
             print('send')
         if should_send:
             if DEBUG: print("Sending", msg, "from", self.num, "to", party.num)
@@ -80,8 +92,15 @@ class Party:
         last_round_msgs = [m for m in self.msgs if m.round == round_num-1]
 
         #TODO: Implement relay for honest party: If you recieved a message in the previous round, forward it to the specified party
+        # if the party is honest
+            # if the list of messages is nonzero
         #TODO: Implement relay for dishonest party
-        
+        # otherwise
+            # if the random number generator is greater than 0.5
+                # add signature to list on message
+                # forward the message
+            # otherwise
+                # return
 
 
     def decide(self):

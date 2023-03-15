@@ -103,6 +103,7 @@ The table should look as follows:
 
 Explain in words the situation in which validity and agreement do not hold.
 
+The situation in which validity and agreement do not hold is when the general is dishonest.
 
 ## Part 2: Dolev-Strong `ds.py`
 Now that we've motivated the need for a stronger protocol to satisfy validity and agreement, you will implement the Dolev-Strong protocol.

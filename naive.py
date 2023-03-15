@@ -62,7 +62,6 @@ class Party:
     def relay(self, party, PKI):
         # TODO: Implement relay for honest party: If you recieved a message, forward it to the specified party
         if self.is_honest:
-            # send the last message in the message array for this party
             # if the length of messages is nonzero
             if len(self.msgs) > 0:
                 # send with last message in the msgs list
@@ -76,11 +75,12 @@ class Party:
         # if self is honest
         if self.is_honest:  
             # instantiate a counter
-            numOccurrences = Counter(list(message.value for message in self.msgs))
+            numOccurrences = Counter((message.value for message in self.msgs))
             # if the len of the counter list equals 1,
+            print('numOccurences', numOccurrences)
             if len(numOccurrences) == 1:
-                #set the output to the first item in the list
-                self.output = numOccurrences[0]
+                #set the output to the key of the first item in the list
+                self.output = list(numOccurrences.keys())[0]
             #otherwise
             else:
                 #set the output to the default
