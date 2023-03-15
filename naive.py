@@ -5,6 +5,8 @@ from cryptography.exceptions import InvalidSignature
 
 import random
 
+from collections import Counter
+
 DEBUG = True
 DEFAULT = 0
 
@@ -71,10 +73,22 @@ class Party:
 
     def decide(self):
         # TODO: implement decision step for both honest and dishonest parties
+        # if self is honest
         if self.is_honest:  
-            print('decision honest')
+            # instantiate a counter
+            numOccurrences = Counter(list(message.value for message in self.msgs))
+            # if the len of the counter list equals 1,
+            if len(numOccurrences) == 1:
+                #set the output to the first item in the list
+                self.output = numOccurrences[0]
+            #otherwise
+            else:
+                #set the output to the default
+                self.output = DEFAULT
+        # otherwise
         else:
-            print('decision not honest')
+            # just return with the original value set to 1
+            return
 
 def validity(general, v, parties):
     if general.is_honest:
@@ -134,4 +148,5 @@ def protocol(parties, PKI):
     _agreed = agreement(parties)
 
     return _valid and _agreed
+
 
