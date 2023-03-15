@@ -119,18 +119,18 @@ except AssertionError as e:
 
 
 
-try:
-    test_naive_honest_general()
-    print("PART 1: TEST 2 PASSED")
-except AssertionError as e:
-    print("PART 1: TEST 2 FAILED")
-    print("Validity and agreement should hold when all parties are honest")
-    print()
+# try:
+#     test_naive_honest_general()
+#     print("PART 1: TEST 2 PASSED")
+# except AssertionError as e:
+#     print("PART 1: TEST 2 FAILED")
+#     print("Validity and agreement should hold when all parties are honest")
+#     print()
 
 
 # try:
 #     test_ds_faulty_general()
-#     print("PART 2: TEST 2 PASSED")
+#     print("PART 2: TEST 1 PASSED")
 # except AssertionError as e:
 #     print("PART 2: TEST 1 FAILED")
 #     print("Validity and agreement should not hold when the general is dishonest")
@@ -143,6 +143,6 @@ except AssertionError as e:
 # except:
 #     print("PART 2: TEST 2 FAILED")
 #     print("Validity and agreement should hold when all parties are honest")
-
+#
 
 

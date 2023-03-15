@@ -72,10 +72,10 @@ If you set the `DEBUG` variable to `True` it will the print the messages that we
 
 
 |    | P0 (General) | P1 | P2 | P3 | P4 |
-|----|--------------|----|----|----|----|
-| R0 |              |    |    |    |    |
-| R1 |              |    |    |    |    |
-| D  |              |    |    |    |    |
+|----|--------------|---|----|----|----|
+| R0 |              | 0 | 0  | 0  | 0  |
+| R1 |              | 0 | 0  | 0  | 0  |
+| D  |              | 0 | 0  | 0  | 0  |
 
 
 
@@ -103,7 +103,11 @@ The table should look as follows:
 
 Explain in words the situation in which validity and agreement do not hold.
 
-The situation in which validity and agreement do not hold is when the general is dishonest.
+The situation in which validity and agreement do not hold is when the general is dishonest. Using the case
+of 4 parties and a general, assume the 4 parties are honest. If the general is dishonest, then it will send a 0
+to half of the honest parties, so a 0 will be sent to 1 and 2, and a 1 to the other half of the honest parties,
+so a 1 will be sent to 3 and 4. When the parties compare with eachother by relaying messages, they will not be
+able to reach consensus as they will have knowledge of 2 0s and 2 1s being sent in the system. Therefore
 
 ## Part 2: Dolev-Strong `ds.py`
 Now that we've motivated the need for a stronger protocol to satisfy validity and agreement, you will implement the Dolev-Strong protocol.
