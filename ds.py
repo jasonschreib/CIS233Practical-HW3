@@ -45,7 +45,7 @@ class Party:
         should_send = True
         if not self.is_honest:
             #TODO: implement a dishonest send protocol. 
-
+            print('send')
         if should_send:
             if DEBUG: print("Sending", msg, "from", self.num, "to", party.num)
 
@@ -87,9 +87,9 @@ class Party:
     def decide(self):
         #TODO: implement decision step for both honest and dishonest parties
         if self.is_honest:  
-
+            print('hello')
         else:
-
+            print('hello - else')
 
 def validity(general, v, parties):
     if general.is_honest:

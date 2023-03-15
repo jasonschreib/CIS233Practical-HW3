@@ -23,26 +23,34 @@ class Party:
         self.num = num
         self.msgs = []
         self.is_honest = honest
-        self.output = None
+        self.output = 1
 
     def sign(self, v):
         msg = bytes((v, self.num))
         return Message(v, self.sk.sign(msg, padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256()))
 
     def send(self, party, msg, PKI):
-         if not self.is_honest:
-            #TODO: Implement a dishonest send protocol
-
-         if DEBUG: print("Sending", msg.value, "from", self.num, "to", party.num)
-
-         party.recieve(msg, PKI)
+        if not self.is_honest:
+            # TODO: Implement a dishonest send protocol
+            #  if dishonest and random generator is .5 or above, then do nothing
+            if random.random() >= 0.5:
+                return
+            # otherwise set message value to 0 if the party number is even
+            elif party.num % 2 == 0:
+                msg.val = 0
+            # otherwise set message value to 1
+            else:
+                msg.val = 1
+        if DEBUG: print("Sending", msg.value, "from", self.num, "to", party.num)
+        # validates the sig, adds it to the list of messages if valid
+        party.recieve(msg, PKI)
 
     def recieve(self, msg, PKI):
         _sig = msg.sig
         _msg = bytes((msg.value, 0))
         
         try:
-            #Verify that the message was signed by the general
+            # Verify that the message was signed by the general
             PKI[0].verify(_sig, _msg, padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH), hashes.SHA256())
         except InvalidSignature:
             return
@@ -50,16 +58,23 @@ class Party:
         self.msgs.append(msg)
 
     def relay(self, party, PKI):
-        #TODO: Implement relay for honest party: If you recieved a message, forward it to the specified party
-        #TODO: Implement relay for dishonest party
-        
+        # TODO: Implement relay for honest party: If you recieved a message, forward it to the specified party
+        if self.is_honest:
+            # send the last message in the message array for this party
+            # if the length of messages is nonzero
+            if len(self.msgs) > 0:
+                # send with last message in the msgs list
+                self.send(party, self.msgs[-1], PKI)
+        # TODO: Implement relay for dishonest party - dishonest party will send nothing
+        else:
+            return
 
     def decide(self):
-        #TODO: implement decision step for both honest and dishonest parties
+        # TODO: implement decision step for both honest and dishonest parties
         if self.is_honest:  
-
+            print('decision honest')
         else:
-
+            print('decision not honest')
 
 def validity(general, v, parties):
     if general.is_honest:
