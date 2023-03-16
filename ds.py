@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.exceptions import InvalidSignature
 
 import random
+from collections import Counter
 
 DEBUG = False
 DEFAULT = 0
@@ -44,24 +45,21 @@ class Party:
     def send(self, party, msg, PKI, round_num):
         should_send = True
         if not self.is_honest:
-            #TODO: implement a dishonest send protocol.
             # if the random value generated is greater than 0.5
             if random.random() >= 0.5:
-                # set message value a 0
+                # set message value as 0
                 msg.val = 0
             # else if the party number is even
             elif party.num % 2 == 0:
-                # set message value a 1
+                # set message value as 1
                 msg.val = 1
             # otherwise
             else:
-                # return out of the function
                 return
-            print('send')
         if should_send:
             if DEBUG: print("Sending", msg, "from", self.num, "to", party.num)
 
-            party.recieve(msg, PKI, round_num)
+        party.recieve(msg, PKI, round_num)
 
     def recieve(self, msg, PKI, round_num):
 
@@ -91,24 +89,54 @@ class Party:
         #If you recieved a message in the previous round, add your signature forward it to the specified party
         last_round_msgs = [m for m in self.msgs if m.round == round_num-1]
 
-        #TODO: Implement relay for honest party: If you recieved a message in the previous round, forward it to the specified party
+        # relay for honest party: If received a message in prev round, forward it to specified party
         # if the party is honest
+        if self.is_honest:
             # if the list of messages is nonzero
-        #TODO: Implement relay for dishonest party
-        # otherwise
-            # if the random number generator is greater than 0.5
-                # add signature to list on message
-                # forward the message
-            # otherwise
-                # return
-
+            if len(last_round_msgs) > 0:
+                # iterate over messages
+                for message in last_round_msgs:
+                    # add signature to each messages
+                    message.add_sig(self.sign(message.value))
+                    # send the message
+                    self.send(party, message, PKI, round_num)
+            # otherwise, if no messages
+            else:
+                return
+        # otherwise - dishonest
+        else:
+            return
 
     def decide(self):
         #TODO: implement decision step for both honest and dishonest parties
-        if self.is_honest:  
-            print('hello')
-        else:
-            print('hello - else')
+        if self.is_honest:
+            # if num messages greater than 0
+            if len(self.msgs) > 0:
+                # set var for the first val in the array of keys
+                OccurrencesFirstVal = self.msgs[0].value
+                # set count var
+                count = 0
+                # iterate over the messages
+                for m in self.msgs:
+                    # if the val of curr message = first occurred val in array
+                    if m.value == OccurrencesFirstVal:
+                        # increment the count
+                        count += 1
+                # if count equals the length of the msgs
+                if count == len(self.msgs):
+                    # output the value
+                    self.output = OccurrencesFirstVal
+                else:
+                    self.output = DEFAULT
+            # otherwise
+            else:
+                # set the output to the default
+                self.output = DEFAULT
+        else:  # dishonest parties
+            if random.random() <= 0.5:
+                self.output = 1
+            else:
+                self.output = DEFAULT
 
 def validity(general, v, parties):
     if general.is_honest:

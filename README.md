@@ -71,11 +71,11 @@ Once your tests pass, fill out the following table with the values each party ha
 If you set the `DEBUG` variable to `True` it will the print the messages that were sent.
 
 
-|    | P0 (General) | P1 | P2 | P3 | P4 |
-|----|--------------|---|----|----|----|
-| R0 |              | 0 | 0  | 0  | 0  |
-| R1 |              | 0 | 0  | 0  | 0  |
-| D  |              | 0 | 0  | 0  | 0  |
+|     | P0 (General) | P1  | P2  | P3   | P4  |
+|-----|--------------|-----|-----|------|-----|
+| R0  |              |     | 0   | 1    |     |
+| R1  |              | 0,1 |     | 1, 1 |     |
+| D   | 1            | 0   | 1   | 0    | 0   |
 
 
 
