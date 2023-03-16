@@ -7,7 +7,7 @@ from tqdm import tqdm
 def test_naive_faulty_general():
     faulty = False
     #TODO: change this back to 1000
-    for i in tqdm(range(0, 10)):
+    for i in tqdm(range(0, 1000)):
         #create parties
         G = Party(True, 0, False) 
         p1 = Party(False, 1, True)
@@ -32,7 +32,7 @@ def test_naive_faulty_general():
 def test_naive_honest_general():
     faulty = False
     # TODO: change this back to 1000
-    for i in tqdm(range(0, 10)):
+    for i in tqdm(range(0, 1000)):
         #create parties
         G = Party(True, 0, True) 
         p1 = Party(False, 1, True)
@@ -58,7 +58,7 @@ def test_naive_honest_general():
 def test_ds_faulty_general():
     faulty = False
     # TODO: change this back to 1000
-    for i in tqdm(range(0, 10)):
+    for i in tqdm(range(0, 1000)):
         #create parties
         G = DsParty(True, 0, False) 
         p1 = DsParty(False, 1, True)
@@ -83,7 +83,7 @@ def test_ds_faulty_general():
 def test_ds_honest_general():
     faulty = False
     # TODO: change this back to 1000
-    for i in tqdm(range(0, 10)):
+    for i in tqdm(range(0, 1000)):
         #create parties
         G = DsParty(True, 0, True) 
         p1 = DsParty(False, 1, True)
@@ -109,23 +109,23 @@ def test_ds_honest_general():
 print("TESTING")
 print("====="*15)
 
-# try:
-#     test_naive_faulty_general()
-#     print("PART 1: TEST 1 PASSED")
-# except AssertionError as e:
-#     print("PART 1: TEST 1 FAILED")
-#     print("Validity and agreement should not hold when the general is dishonest")
-#     print()
+try:
+    test_naive_faulty_general()
+    print("PART 1: TEST 1 PASSED")
+except AssertionError as e:
+    print("PART 1: TEST 1 FAILED")
+    print("Validity and agreement should not hold when the general is dishonest")
+    print()
 
 
 
-# try:
-#     test_naive_honest_general()
-#     print("PART 1: TEST 2 PASSED")
-# except AssertionError as e:
-#     print("PART 1: TEST 2 FAILED")
-#     print("Validity and agreement should hold when all parties are honest")
-#     print()
+try:
+    test_naive_honest_general()
+    print("PART 1: TEST 2 PASSED")
+except AssertionError as e:
+    print("PART 1: TEST 2 FAILED")
+    print("Validity and agreement should hold when all parties are honest")
+    print()
 
 
 try:
